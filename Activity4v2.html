@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Information Form</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            width: 380px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0 15px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #4f46e5;
+            outline: none;
+        }
+
+        .options {
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 48%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .submit-btn {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .submit-btn:hover {
+            background: #4338ca;
+        }
+
+        .reset-btn {
+            background: #e5e7eb;
+        }
+
+        .reset-btn:hover {
+            background: #d1d5db;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        table {
+            margin-top: 25px;
+            width: 380px;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #4f46e5;
+            color: white;
+            width: 40%;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>User Information</h2>
+
+    <form id="userForm">
+        <label>First Name</label>
+        <input type="text" name="firstname" required>
+
+        <label>Last Name</label>
+        <input type="text" name="lastname" required>
+
+        <label>Age</label>
+        <input type="number" name="age">
+
+        <label>Gender</label>
+        <div class="options">
+            <input type="radio" name="gender" value="Male"> Male
+            <input type="radio" name="gender" value="Female"> Female
+            <input type="radio" name="gender" value="Other"> Other
+        </div>
+
+        <label>Hobbies</label>
+        <div class="options">
+            <input type="checkbox" name="hobby" value="Reading"> Reading
+            <input type="checkbox" name="hobby" value="Traveling"> Traveling
+            <input type="checkbox" name="hobby" value="Gaming"> Gaming
+        </div>
+
+        <label>Year Level</label>
+        <select name="yearlevel">
+            <option>1st Year</option>
+            <option>2nd Year</option>
+            <option>3rd Year</option>
+            <option>4th Year</option>
+        </select>
+
+        <div class="button-group">
+            <button type="submit" class="submit-btn">Submit</button>
+            <button type="reset" class="reset-btn">Clear</button>
+        </div>
+    </form>
+</div>
+
+<table>
+    <tbody id="outputTable"></tbody>
+</table>
+
+<script>
+const form = document.getElementById("userForm");
+const outputTable = document.getElementById("outputTable");
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const hobbies = [];
+    document.querySelectorAll('input[name="hobby"]:checked').forEach((hobby) => {
+        hobbies.push(hobby.value);
+    });
+
+    outputTable.innerHTML = `
+        <tr><th>First Name</th><td>${form.firstname.value}</td></tr>
+        <tr><th>Last Name</th><td>${form.lastname.value}</td></tr>
+        <tr><th>Age</th><td>${form.age.value}</td></tr>
+        <tr><th>Gender</th><td>${form.gender.value || ""}</td></tr>
+        <tr><th>Hobbies</th><td>${hobbies.join(", ")}</td></tr>
+        <tr><th>Year Level</th><td>${form.yearlevel.value}</td></tr>
+    `;
+});
+
+// 🔹 This clears the table when Clear is clicked
+form.addEventListener("reset", function() {
+    outputTable.innerHTML = "";
+});
+</script>
+
+</body>
+</html>
